@@ -16,7 +16,7 @@ function Hero() {
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter  text-center font-medium z-20 text-white flex gap-y-1 flex-col ">
               Change the way you store your{" "}
-              <span className="border border-neutral-700/[0.4]  rounded-md bg-white/95 text-black">
+              <span className="border border-neutral-700/[0.4] inline w-fit mx-auto rounded-md bg-white/90  text-black">
                 Bookmarks 🔖
               </span>
             </h1>
