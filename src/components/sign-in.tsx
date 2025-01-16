@@ -15,6 +15,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -25,8 +26,10 @@ import { SignInSchema } from "@/lib/types";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -37,9 +40,29 @@ export default function SignIn() {
     mode: "onSubmit",
   });
 
-  function onSubmit(values: z.infer<typeof SignInSchema>) {
-    console.log(values);
-  }
+  async function onSubmit(data: z.infer<typeof SignInSchema>) {
+    await signIn.email({
+       email: data.email, 
+       password: data.password,
+       fetchOptions: {
+        onResponse: () => {
+          setLoading(false);
+        },
+        onRequest: () => {
+          setLoading(true);
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+        onSuccess: async () => {
+          toast.success("Login successful");
+          router.push("/dashboard");
+        },
+      }
+    }
+    )}
+  
+  
 
   return (
     <Card className="z-50 rounded-md rounded-t-none  w-[450px]">

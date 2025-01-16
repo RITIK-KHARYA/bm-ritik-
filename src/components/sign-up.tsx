@@ -49,7 +49,7 @@ export function SignUp() {
     email:data.email,
     password: data.password,
     name: `${data.firstName} ${data.lastName}`,
-    callbackURL: "/dashboard",
+    callbackURL: "/home",
     fetchOptions: {
       onResponse: () => {
         setLoading(false);
@@ -61,6 +61,7 @@ export function SignUp() {
         toast.error(ctx.error.message);
       },
       onSuccess: async () => {
+        toast.success("Account created successfully");
         router.push("/dashboard");
       },
     },
