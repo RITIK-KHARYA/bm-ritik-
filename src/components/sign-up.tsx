@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -23,7 +22,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { SignUpSchema } from "@/lib/types";
@@ -32,6 +30,7 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export function SignUp() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
@@ -45,12 +44,31 @@ export function SignUp() {
     mode: "onSubmit",
   });
 
-  function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    console.log(values);
+  async function onSubmit(data: z.infer<typeof SignUpSchema>) {
+  await signUp.email({
+    email:data.email,
+    password: data.password,
+    name: `${data.firstName} ${data.lastName}`,
+    callbackURL: "/dashboard",
+    fetchOptions: {
+      onResponse: () => {
+        setLoading(false);
+      },
+      onRequest: () => {
+        setLoading(true);
+      },
+      onError: (ctx) => {
+        toast.error(ctx.error.message);
+      },
+      onSuccess: async () => {
+        router.push("/dashboard");
+      },
+    },
+  });
   }
 
   return (
-    <Card className="z-50 rounded-md rounded-t-none max-w-md">
+    <Card className="z-50 rounded-md rounded-t-none  w-[450px]">
       <CardHeader>
         <CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
         <CardDescription className="text-xs md:text-sm">
@@ -67,15 +85,13 @@ export function SignUp() {
                   name="firstName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
                       <FormControl>
                         <div className="grid gap-2">
                           <Label htmlFor="first-name">First name</Label>
                           <Input
-                            id="first-name"
                             placeholder="Max"
                             required
-                           {...field}
+                            {...field}
                           />
                         </div>
                       </FormControl>
@@ -91,12 +107,10 @@ export function SignUp() {
                   name="lastName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
                       <FormControl>
                         <div className="grid gap-2">
                           <Label htmlFor="last-name">Last name</Label>
                           <Input
-                            id="last-name"
                             placeholder="Robinson"
                             required
                             {...field}
@@ -116,12 +130,10 @@ export function SignUp() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
                     <FormControl>
                       <div className="grid gap-2">
                         <Label htmlFor="email">Email</Label>
                         <Input
-                          id="email"
                           type="email"
                           placeholder="m@example.com"
                           required
@@ -141,12 +153,10 @@ export function SignUp() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
                     <FormControl>
                       <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                        <Label>Password</Label>
                         <Input
-                          id="password"
                           type="password"
                           autoComplete="new-password"
                           placeholder="Password"
@@ -163,14 +173,11 @@ export function SignUp() {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
                     <FormControl>
                       <div className="grid gap-2">
-                        <Label htmlFor="password">Confirm Password</Label>
+                        <Label>Confirm Password</Label>
                         <Input
-                          id="password_confirmation"
                           type="password"
-                         
                           autoComplete="new-password"
                           placeholder="Confirm Password"
                           {...field}
@@ -186,7 +193,7 @@ export function SignUp() {
                 {loading ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
-                  "Create an account"
+                  "Create an Account"
                 )}
               </Button>
             </div>
