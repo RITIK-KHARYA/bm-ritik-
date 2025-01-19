@@ -1,7 +1,17 @@
+import { AppSidebar } from "@/components/app-sidebar";
+import HeaderMain from "@/components/header-main";
+import {
+  SidebarProvider,
+} from "@/components/ui/sidebar";
+
 export default function MainLayout({children}:{children:React.ReactNode}) {
   return (
-    <div>
+    <SidebarProvider>
+      <AppSidebar />
+      <div>
+        <HeaderMain />
         {children}
-    </div>
-  )
+        </div>
+    </SidebarProvider>
+  );
 }
