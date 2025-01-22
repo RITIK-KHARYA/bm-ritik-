@@ -1,17 +1,21 @@
-import { AppSidebar } from "@/components/app-sidebar";
 import HeaderMain from "@/components/header-main";
+import { AppSidebar } from "@/components/app-sidebar";
+
 import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
-
-export default function MainLayout({children}:{children:React.ReactNode}) {
+export default function MainLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <SidebarProvider>
+    <SidebarProvider suppressHydrationWarning>
       <AppSidebar />
-      <div>
+      <main className="w-full">
         <HeaderMain />
         {children}
-        </div>
+      </main>
     </SidebarProvider>
   );
 }
