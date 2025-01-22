@@ -9,14 +9,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   directUrl = env("DIRECT_DATABASE_URL")
-  url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String     @id @default(cuid())
+  email         String     @unique
   name          String
   emailVerified Boolean
   image         String?
@@ -24,6 +24,8 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  bookmarks     bookmark[]
+  spaces        space[]
 
   @@map("user")
 }
@@ -71,4 +73,43 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model bookmark {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  url         String
+  thumbnail   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  reminder    DateTime?
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  space         space?          @relation(fields: [spaceId], references: [id])
+  spaceId       String?
+  SpaceBookmark SpaceBookmark[]
+}
+
+model space {
+  id            String          @id @default(cuid())
+  name          String
+  icon          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookmarks     bookmark[]
+  isPublic      Boolean         @default(false)
+  SpaceBookmark SpaceBookmark[]
+}
+
+model SpaceBookmark {
+  spaceId    String
+  bookmarkId String
+  createdAt  DateTime @default(now())
+  space    space    @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  bookmark bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  @@id([spaceId, bookmarkId])
 }
