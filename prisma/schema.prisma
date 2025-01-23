@@ -80,7 +80,7 @@ model bookmark {
   name        String
   description String?
   url         String
-  thumbnail   String
+  thumbnail   String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   reminder    DateTime?
