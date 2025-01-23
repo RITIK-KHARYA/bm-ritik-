@@ -17,7 +17,6 @@ export default function Header() {
       </div>
       <div className="">
        <div className="flex sm:gap-2 gap-1 items-center ">
-        <ModeToggle />
         <SignInButton />
         <SignUpButton />
        </div>

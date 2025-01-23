@@ -1,7 +1,21 @@
+"use client";
+
 import Link from "next/link";
-import { Github } from "lucide-react";
+import { Github, Moon, Sun } from "lucide-react";
+import { SignInButton } from "../auth-button";
+import { SquareSwitch } from "../ui/square-switch";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
+    const [theme, setTheme] = useState("dark");
+
+    useEffect(() => {
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    }, [theme]);
+
+    const toggleTheme = () => {
+      setTheme((prevTheme:any) => (prevTheme === "dark" ? "light" : "dark")); //implicity type is any here :)
+    };
   return (
     <footer className="w-full bg-black text-white py-16">
       <div className="container mx-auto px-4">
@@ -153,19 +167,22 @@ export default function Footer() {
           <div className="flex items-center space-x-4">
             <span className="text-gray-400">&copy; 2024 Pinsphere.ai</span>
             <Link
-              href="https://github.com"
+              href="https://github.com/wtfdivyansh/bm"
               className="text-gray-400 hover:text-white transition-colors"
             >
               <Github className="h-5 w-5" />
             </Link>
           </div>
           <div className="flex space-x-4">
-            <button className="bg-black text-white border border-gray-800 px-4 py-2 hover:bg-gray-900 transition-colors">
-              Get Started
-            </button>
-            <button className="bg-white text-black px-4 py-2 hover:bg-gray-100 transition-colors">
-              Sign in
-            </button>
+            <div className="flex items-center space-x-2">
+              <Sun className="h-4 w-4 text-gray-400" />
+              <SquareSwitch
+                checked={theme === "dark"}
+                onCheckedChange={toggleTheme}
+              />
+              <Moon className="h-4 w-4 text-gray-400" />
+            </div>
+            <SignInButton />
           </div>
         </div>
       </div>
