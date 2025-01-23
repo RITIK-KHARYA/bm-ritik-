@@ -78,7 +78,7 @@ model Verification {
 model bookmark {
   id          String    @id @default(cuid())
   name        String
-  description String
+  description String?
   url         String
   thumbnail   String
   createdAt   DateTime  @default(now())
