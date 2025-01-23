@@ -48,6 +48,12 @@ const data = {
   ],
   navMain: [
     {
+      title: "Dashboard",
+      url: "#",
+      icon: Home,
+      isActive: true,
+    },
+    {
       title: "Search",
       url: "#",
       icon: Search,
@@ -58,13 +64,7 @@ const data = {
       icon: Sparkles,
     },
     {
-      title: "Home",
-      url: "#",
-      icon: Home,
-      isActive: true,
-    },
-    {
-      title: "Inbox",
+      title: "Library",
       url: "#",
       icon: Inbox,
       badge: "10",
@@ -256,21 +256,19 @@ const data = {
       ],
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   
   return (
-    <Sidebar className="border-r-0 " {...props} >
-      <SidebarHeader>
+    <Sidebar className="border-r-0 bg-neutral-950 " {...props}>
+      <SidebarHeader  >
         <TeamSwitcher teams={data.teams} />
         <NavMain items={data.navMain} />
       </SidebarHeader>
-      <SidebarContent>
-        
-      </SidebarContent>
+      <SidebarContent></SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

@@ -12,7 +12,7 @@ export default function MainLayout({
   return (
     <SidebarProvider suppressHydrationWarning>
       <AppSidebar />
-      <main className="w-full">
+      <main className="w-full bg-[#0F0F10]">
         <HeaderMain />
         {children}
       </main>

@@ -16,7 +16,7 @@ import {
 export default function Sidebar() {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar  />
      
     </SidebarProvider>
   )

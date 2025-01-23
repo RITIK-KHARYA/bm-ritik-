@@ -111,3 +111,6 @@ model SpaceBookmark {
   bookmark bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   @@id([spaceId, bookmarkId])
 }
+
+
+//create metadata table for bookmarks to have mroe info for embeddings
