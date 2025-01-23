@@ -1,6 +1,7 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Box, House, PanelsTopLeft, Plus } from "lucide-react";
+import BookmarkDialog from "./bookmark-dialog";
 
 export default function BookmarkTabs() {
   return (
@@ -45,10 +46,7 @@ export default function BookmarkTabs() {
           </TabsTrigger>
         </TabsList>
         <div className="flex flex-row">
-          <div className=" h-fit w-fit border border-neutral-700/[0.2] bg-neutral-900 flex flex-row cursor-pointer">
-          
-            <Plus className="text-neutral-500  " />
-          </div>
+         <BookmarkDialog />
           <div></div>
         </div>
       </div>
