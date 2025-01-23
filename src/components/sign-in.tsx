@@ -87,6 +87,7 @@ export default function SignIn() {
                         <Input
                           id="email"
                           type="email"
+                          className="rounded-none"
                           placeholder="m@example.com"
                           required
                           {...field}
@@ -112,6 +113,7 @@ export default function SignIn() {
                           id="password"
                           type="password"
                           placeholder="password"
+                          className="rounded-none"
                           autoComplete="password"
                           {...field}
                         />
@@ -122,7 +124,11 @@ export default function SignIn() {
                 )}
               />
 
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button
+                type="submit"
+                className="w-full rounded-none"
+                disabled={loading}
+              >
                 {loading ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
@@ -140,7 +146,7 @@ export default function SignIn() {
         >
           <Button
             variant="outline"
-            className={cn("w-full gap-2")}
+            className={cn("w-full gap-2 rounded-none")}
             onClick={async () => {
               await signIn.social({
                 provider: "google",
@@ -163,7 +169,7 @@ export default function SignIn() {
           </Button>
           <Button
             variant="outline"
-            className={cn("w-full gap-2 ")}
+            className={cn("w-full gap-2 rounded-none")}
             onClick={async () => {
               await signIn.social({
                 provider: "github",

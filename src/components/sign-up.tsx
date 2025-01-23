@@ -91,14 +91,12 @@ export function SignUp() {
                           <Label htmlFor="first-name">First name</Label>
                           <Input
                             placeholder="Max"
+                            className="rounded-none"
                             required
                             {...field}
                           />
                         </div>
                       </FormControl>
-                      <FormDescription>
-                        This is your public display name.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -113,14 +111,12 @@ export function SignUp() {
                           <Label htmlFor="last-name">Last name</Label>
                           <Input
                             placeholder="Robinson"
+                            className="rounded-none"
                             required
                             {...field}
                           />
                         </div>
                       </FormControl>
-                      <FormDescription>
-                        This is your public display name.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -137,14 +133,12 @@ export function SignUp() {
                         <Input
                           type="email"
                           placeholder="m@example.com"
+                          className="rounded-none"
                           required
                           {...field}
                         />
                       </div>
                     </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -160,6 +154,7 @@ export function SignUp() {
                         <Input
                           type="password"
                           autoComplete="new-password"
+                          className="rounded-none"
                           placeholder="Password"
                           {...field}
                         />
@@ -180,6 +175,7 @@ export function SignUp() {
                         <Input
                           type="password"
                           autoComplete="new-password"
+                          className="rounded-none"
                           placeholder="Confirm Password"
                           {...field}
                         />
@@ -190,7 +186,7 @@ export function SignUp() {
                 )}
               />
 
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button type="submit" className="w-full rounded-none" disabled={loading}>
                 {loading ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
