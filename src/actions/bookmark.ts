@@ -15,9 +15,32 @@ export const createBookmark = async (data: CreateBookmark) => {
     if (!isUrlValid) {  
       throw new Error("Invalid URL");
     }
-   
+     const metadata = await getMetadata(data.url);
+    if(data.spaceId){
+      const space = await prisma.space.findUnique({
+        where: {
+          id: data.spaceId,
+        }
+      });
+      if(!space){
+        return {data:null,error:"space not found"}
+      }
+      const bookmarkInSpace = await prisma.bookmark.create({
+        data: {
+          userId: user.user.id,
+          url: data.url,
+          title: metadata?.title,
+          description: metadata?.description,
+          spaceId: data.spaceId,
+        }
+      })
+      if(!bookmarkInSpace){
+        return {data:null,error:"unable to create bookmark in space"}
+      }
+      return {data:bookmarkInSpace,error:null}
+    }
   
-    const metadata = await getMetadata(data.url);
+
     const bookmark = await prisma.bookmark.create({
       data: {
         userId: user.user.id,

@@ -17,7 +17,6 @@ export const SignInSchema = z.object({
 
 export const CreateBookmarkSchema = z.object({
     url : z.string().url({message: "Invalid url"}),
-    userId : z.string({message: "userId is required"}),
     spaceId : z.string().optional(),
 })
 
