@@ -1,12 +1,9 @@
 "use server";
-
-import { CreateBookmark } from "@/lib/types";
 import { getSession } from "./session";
 import { prisma } from "@/lib/prisma";
-// import ogs from "open-graph-scraper";
-// import type { SuccessResult } from "open-graph-scraper/types";
-// import { LogoScrape } from 'logo-scrape';
-import getMetaData from "metadata-scraper";
+import { getMetadata } from "@/lib/extracter";
+import { CreateBookmark } from "@/lib/types";
+import { isValidUrl } from "@/lib/utils";
 
 export const createBookmark = async (data: CreateBookmark) => {
   const user = await getSession();
@@ -14,15 +11,26 @@ export const createBookmark = async (data: CreateBookmark) => {
     throw new Error("Not logged in");
   }
   try {
-    const thumbnail = await getMetaData(data.url);
+    const isUrlValid = isValidUrl(data.url);
+    if (!isUrlValid) {  
+      throw new Error("Invalid URL");
+    }
+   
+  
+    const metadata = await getMetadata(data.url);
     const bookmark = await prisma.bookmark.create({
-      data: { ...data,thumbnail:thumbnail.image },
+      data: {
+        userId: user.user.id,
+        url: data.url,
+        title: metadata?.title,
+        description: metadata?.description 
+      }
     });
+    
 
     return { data: bookmark, error: null };
   } catch (error) {
-    console.log(error);
-    return { data: null, error: error };
+    return { data: null, error: error as Error };
   }
 };
 
@@ -31,3 +39,4 @@ export const createBookmark = async (data: CreateBookmark) => {
 export const deleteBookmark = () => {};
 
 export const updateBookmark = () => {};
+
