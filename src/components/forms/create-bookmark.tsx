@@ -18,9 +18,10 @@ import { useState } from "react";
 import { CheckCircle, CheckIcon, Loader2, X, XCircle } from "lucide-react";
 import MultipleTags from "../multiple-tags";
 import { isValidUrl } from "@/lib/utils";
+import { createBookmark } from "@/actions/bookmark";
 
 export const CreateBookmark = () => {
-  const [loading, setLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof CreateBookmarkSchema>>({
     resolver: zodResolver(CreateBookmarkSchema),
     defaultValues: {
@@ -30,7 +31,16 @@ export const CreateBookmark = () => {
     mode: "onSubmit",
   });
   const onSubmit = async (data: z.infer<typeof CreateBookmarkSchema>) => {
-    console.log(data);
+    try {
+     setIsLoading(true);
+     const bookmark = await createBookmark(data);
+     console.log(bookmark);
+
+    }catch(error){
+      console.log(error);
+    }finally{
+        setIsLoading(false);
+    }
   };
   return (
     <div className="flex flex-col gap-4">
@@ -49,7 +59,7 @@ export const CreateBookmark = () => {
                         <Input
                           type="url"
                           className="rounded-none bg-neutral-900/60"
-                          placeholder="m@example.com"
+                          placeholder="https://example.com"
                           required
                           {...field}
                         />
@@ -66,7 +76,6 @@ export const CreateBookmark = () => {
                       </div>
                     </div>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -89,18 +98,18 @@ export const CreateBookmark = () => {
               <Button
                 type="submit"
                 className="w-full rounded-none font-mono disabled:text-neutral-500"
-                disabled={loading}
+                disabled={isloading}
               >
-                {loading ? (
+                {isloading ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
                   "Create"
                 )}
               </Button>
               <Button
-              type="button"
+                type="button"
                 className="w-full rounded-none font-mono text-neutral-100 disabled:text-neutral-500 bg-neutral-900/60 hover:bg-neutral-900/50 hover:text-neutral-300"
-                disabled={false}
+                disabled={isloading}
               >
                 Cancel
               </Button>

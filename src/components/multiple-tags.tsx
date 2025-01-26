@@ -19,6 +19,7 @@ export default function MultipleTags({ value, onChange }: { value: string[]; onC
           setTags(newTags);
           onChange(newTags.map(tag => tag.text));
         }}
+        maxTags={2}
         placeholder="Press Enter to add a tag"
         styleClasses={{
           inlineTagsContainer:
