@@ -26,6 +26,7 @@ model User {
   accounts      Account[]
   bookmarks     bookmark[]
   spaces        space[]
+  tags          Tag[]
 
   @@map("user")
 }
@@ -76,18 +77,19 @@ model Verification {
 }
 
 model bookmark {
-  id          String    @id @default(cuid())
-  title        String?
-  description String?
-  url         String
-  thumbnail   String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  reminder    DateTime?
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String          @id @default(cuid())
+  title         String?
+  description   String?
+  url           String
+  thumbnail     String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  reminder      DateTime?
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   spaceId       String?
   SpaceBookmark SpaceBookmark[]
+  BookmarkTag   BookmarkTag[]
 }
 
 model space {
@@ -107,10 +109,28 @@ model SpaceBookmark {
   spaceId    String
   bookmarkId String
   createdAt  DateTime @default(now())
-  space    space    @relation(fields: [spaceId], references: [id], onDelete: Cascade)
-  bookmark bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  space      space    @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  bookmark   bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+
   @@id([spaceId, bookmarkId])
 }
 
+model Tag {
+  id          String        @id @default(cuid())
+  name        String
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade) // Relationship with User
+  createdAt   DateTime      @default(now())
+  BookmarkTag BookmarkTag[]
 
-//create metadata table for bookmarks to have mroe info for embeddings
+  @@unique([name, userId])
+}
+
+model BookmarkTag {
+  bookmarkId String
+  tagId      String
+  bookmark   bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  @@id([bookmarkId, tagId])
+}

@@ -1,3 +1,4 @@
+import { Tags } from "lucide-react";
 import z from "zod";
 export const SignUpSchema = z.object({
     firstName : z.string().min(2),
@@ -18,6 +19,7 @@ export const SignInSchema = z.object({
 export const CreateBookmarkSchema = z.object({
     url : z.string().url({message: "Invalid url"}),
     spaceId : z.string().optional(),
+    tags : z.array(z.string()).max(2,{message:"Max 2 tags are allowes"}).optional()
 })
 
 export type CreateBookmark = z.infer<typeof CreateBookmarkSchema>;
