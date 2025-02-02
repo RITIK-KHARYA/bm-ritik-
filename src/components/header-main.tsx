@@ -13,7 +13,7 @@ import { SidebarInset } from "./ui/sidebar";
 
 export default function HeaderMain() {
   return (
-      <header className="flex h-14  items-center gap-2">
+      <header className="flex h-14  items-center gap-2 border-b border-neutral-700/[0.5]">
         <div className="flex flex-1 items-center gap-2 px-3">
           <SidebarTrigger />
           <Separator orientation="vertical" className="mr-2 h-4" />
