@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "www.launchuicomponents.com",
       },
+      {
+        protocol: "https",
+        hostname: "assets.vercel.com",
+      },
     ],
   },
 };

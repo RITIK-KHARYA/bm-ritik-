@@ -1,6 +1,7 @@
 import { getBookmarks } from "@/data-access/bookmark";
 import { Bookmark } from "lucide-react";
 import { Button } from "./ui/button";
+import { BookmarkCard } from "./bookmark-card";
 
 export default async function BookmarkList() {
   const bookmarks = await getBookmarks();
@@ -29,9 +30,18 @@ export default async function BookmarkList() {
   }
   return (
     <div className="w-full h-full">
-      {bookmarks.data?.map((bookmark) => (
-        <div key={bookmark.id}>{bookmark.title}</div>
-      ))}
+      <div className="grid grid-cols-4">
+        {bookmarks.data?.map((bookmark) => (
+          <BookmarkCard
+            key={bookmark.id}
+            title={bookmark.title}
+            description={bookmark.description}
+            url={bookmark.url}
+            thumbnail={bookmark.thumbnail}
+            tags={bookmark.tags}
+          />
+        ))}
+      </div>
     </div>
   );
 }

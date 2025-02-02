@@ -11,9 +11,25 @@ export const getBookmarks = async () => {
       where: {
         userId: user.user.id,
       },
+      include: {
+       BookmarkTag: {
+        select: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+       },
+      }
     })
+    const data = bookmarks.map((bookmark) => ({
+     ...bookmark,
+      tags: bookmark.BookmarkTag.map((tag) => tag.tag.name),
+    }));
     
-    return {data:bookmarks,error:null}
+    return {data:data,error:null}
   } catch (error) {
     console.log(error);
     return {data:null,error:error}
