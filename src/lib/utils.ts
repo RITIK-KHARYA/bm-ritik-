@@ -14,8 +14,7 @@ export const getWebsiteName = (url: string): string => {
   try {
 
     const hostname = new URL(url).hostname;
-    console.log(hostname);
-    console.log(new URL(url));
+
 
 
     let domain = hostname.replace(/^www\./, "");
@@ -25,6 +24,6 @@ export const getWebsiteName = (url: string): string => {
     return domain;
   } catch (error) {
     console.error("Invalid URL:", url);
-    return url; // Return original URL if there's an error
+    return url; 
   }
 };

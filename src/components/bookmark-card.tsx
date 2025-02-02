@@ -1,3 +1,4 @@
+import { getWebsiteName } from "@/lib/utils";
 import { Ellipsis, Link2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +8,7 @@ interface BookmarkCardProps {
   description: string | null;
   url: string;
   thumbnail: string | null;
+  icon: string | null;
   tags: string[];
 }
 
@@ -15,6 +17,7 @@ export const BookmarkCard = ({
   url,
   thumbnail,
   tags,
+  icon
 }: BookmarkCardProps) => {
   return (
     <div className="flex flex-col rounded-none border border-neutral-700/[0.2] bg-neutral-900 gap-1 group cursor-pointer h-64">
@@ -35,7 +38,7 @@ export const BookmarkCard = ({
       <div className="p-1 flex flex-col  h-[40%] justify-between">
         <div className="flex-grow">
           <p className="text-sm line-clamp-3  font-mono text-neutral-300">
-            {title ?? "Untitled"}
+            {title ?? getWebsiteName(url)}
           </p>
         </div>
 
@@ -52,12 +55,23 @@ export const BookmarkCard = ({
               </div>
             ))}
           </div>
-          <Link href={url} target="_blank">
-            <Link2
-              className="text-xs font-mono text-neutral-500 hover:text-neutral-300 transition-opacity"
-              size={24}
-            />
-          </Link>
+          <div className="flex flex-row gap-2">
+            <Link href={url} target="_blank">
+              <Link2
+                className="text-xs font-mono text-neutral-500 hover:text-neutral-300 transition-opacity"
+                size={24}
+              />
+            </Link>
+            <div className="border border-neutral-700/[0.4] bg-neutral-900 rounded-none p-1 flex flex-row gap-2 items-center">
+              <Image
+                src={icon ?? "/vercel.svg"}
+                alt="icon"
+                height={20}
+                width={20}
+                className="rounded-none"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

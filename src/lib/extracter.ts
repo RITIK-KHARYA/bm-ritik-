@@ -28,10 +28,20 @@ export const getMetadata = async (url: string) => {
           ?.getAttribute("content") ||
         document.querySelector('link[rel="image_src"]')?.getAttribute("href") ||
         "";
+        const favicon =
+          document.querySelector('link[rel="icon"]')?.getAttribute("href") ||
+          document
+            .querySelector('link[rel="shortcut icon"]')
+            ?.getAttribute("href") ||
+          document
+            .querySelector('link[rel="apple-touch-icon"]')
+            ?.getAttribute("href") ||
+          "";
       return {
         title: title ? title.getAttribute("content") : "",
         description: description ? description.getAttribute("content") : "",
         image: image ? new URL(image).href : "",
+        icon : favicon ? new URL(favicon).href : "",
       };
     });
     await browser.close();

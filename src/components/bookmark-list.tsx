@@ -39,6 +39,7 @@ export default async function BookmarkList() {
             url={bookmark.url}
             thumbnail={bookmark.thumbnail}
             tags={bookmark.tags}
+            icon={bookmark.icon}
           />
         ))}
       </div>

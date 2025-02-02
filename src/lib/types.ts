@@ -1,3 +1,4 @@
+import { bookmark, BookmarkTag } from "@prisma/client";
 import { Tags } from "lucide-react";
 import z from "zod";
 export const SignUpSchema = z.object({
@@ -23,3 +24,11 @@ export const CreateBookmarkSchema = z.object({
 })
 
 export type CreateBookmark = z.infer<typeof CreateBookmarkSchema>;
+
+export interface ExtendedBookmark extends bookmark {
+  tags: string[];
+}
+
+export interface BookmarkType {
+  initialData: ExtendedBookmark[];
+}

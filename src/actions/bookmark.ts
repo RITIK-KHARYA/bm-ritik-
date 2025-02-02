@@ -18,6 +18,7 @@ export const createBookmark = async (data: CreateBookmark) => {
     }
 
     const metadata = await getMetadata(data.url);
+    console.log(metadata?.icon);
 
     const result = await prisma.$transaction(async (prisma) => {
       const bookmark = await prisma.bookmark.create({
@@ -27,6 +28,7 @@ export const createBookmark = async (data: CreateBookmark) => {
           title: metadata?.title,
           thumbnail: metadata?.image,
           description: metadata?.description,
+          icon: metadata?.icon,
           spaceId: data.spaceId || null,
         },
       });

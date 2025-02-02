@@ -1,20 +1,21 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Bookmark, Plus } from "lucide-react";
 import { CreateBookmark } from "./forms/create-bookmark";
+import { useAddBookmarkModal } from "@/hooks/use-strore";
+
 
 export default function BookmarkDialog() {
+  const  {isOpen, setIsOpen} = useAddBookmarkModal()
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <div className=" h-fit w-fit border border-neutral-700/[0.2] bg-neutral-900 flex flex-row cursor-pointer">
           <Plus className="text-neutral-500  " />
