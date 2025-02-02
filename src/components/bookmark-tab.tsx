@@ -2,6 +2,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Box, House, PanelsTopLeft, Plus } from "lucide-react";
 import BookmarkDialog from "./bookmark-dialog";
+import BookmarkList from "./bookmark-list";
 
 export default function BookmarkTabs() {
   return (
@@ -51,9 +52,7 @@ export default function BookmarkTabs() {
         </div>
       </div>
       <TabsContent value="tab-1">
-        <p className="p-4 pt-1 text-center text-xs text-muted-foreground">
-          Content for Tab 1
-        </p>
+        <BookmarkList />
       </TabsContent>
       <TabsContent value="tab-2">
         <p className="p-4 pt-1 text-center text-xs text-muted-foreground">
