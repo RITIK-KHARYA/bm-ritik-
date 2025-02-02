@@ -5,11 +5,28 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import ReactQueryProvider from "@/components/providers/query-client-provider";
-export default function MainLayout({
+import { QueryClient } from "@tanstack/react-query";
+import { getBookmarks } from "@/data-access/bookmark";
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+   const query = new QueryClient();
+   await query.prefetchQuery({
+     queryKey: ["bookmarks"],
+     queryFn: async () => {
+       const data = await getBookmarks();
+       return data;
+     },
+   });
+  //  await query.prefetchQuery({
+  //    queryKey: ["space"],
+  //    queryFn: async () => {
+  //      const data = await getBookmarks();
+  //      return data;
+  //    },
+  //  });
   return (
     <ReactQueryProvider>
       <SidebarProvider suppressHydrationWarning>
