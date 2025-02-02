@@ -1,11 +1,14 @@
+"use client"
 import { getBookmarks } from "@/data-access/bookmark";
 import { Bookmark } from "lucide-react";
 import { Button } from "./ui/button";
 import { BookmarkCard } from "./bookmark-card";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 
-export default async function BookmarkList() {
-  const bookmarks = await getBookmarks();
-  if (!bookmarks.data) {
+export default function BookmarkList() {
+   const {data: bookmarks, error} = useBookmarks()
+  
+  if (!bookmarks) {
     return(
     <div className="w-full h-full items-center justify-center">
         <div className="flex flex-col items-center bg-nuetral-900 rounded-none p-4 gap-2 ">
@@ -17,7 +20,7 @@ export default async function BookmarkList() {
     </div>
     )
   }
-  if(bookmarks.error){
+  if(error){
     return(
       <div className="w-full h-full items-center justify-center">
           <div className="flex flex-col items-center bg-nuetral-900 rounded-none p-4 gap-2 ">
@@ -31,7 +34,7 @@ export default async function BookmarkList() {
   return (
     <div className="w-full h-full">
       <div className="grid grid-cols-4 gap-2">
-        {bookmarks.data?.map((bookmark) => (
+        {bookmarks?.map((bookmark) => (
           <BookmarkCard
             key={bookmark.id}
             title={bookmark.title}

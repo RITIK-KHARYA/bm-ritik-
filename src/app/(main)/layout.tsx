@@ -5,7 +5,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import ReactQueryProvider from "@/components/providers/query-client-provider";
-import { QueryClient } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { getBookmarks } from "@/data-access/bookmark";
 export default async function MainLayout({
   children,
@@ -33,7 +33,7 @@ export default async function MainLayout({
         <AppSidebar />
         <main className="w-full bg-[#0F0F10]">
           <HeaderMain />
-          {children}
+          <HydrationBoundary state={dehydrate(query)}>{children}</HydrationBoundary>
         </main>
       </SidebarProvider>
     </ReactQueryProvider>

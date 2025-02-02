@@ -15,13 +15,16 @@ import {
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { CheckCircle, CheckIcon, Loader2, X, XCircle } from "lucide-react";
+import { CheckIcon, Loader2, X, } from "lucide-react";
 import MultipleTags from "../multiple-tags";
 import { isValidUrl } from "@/lib/utils";
-import { createBookmark } from "@/actions/bookmark";
+
+import { createBookmarkMutation} from "@/hooks/use-bookmarks";
+import { useAddBookmarkModal } from "@/hooks/use-strore";
 
 export const CreateBookmark = () => {
-  const [isloading, setIsLoading] = useState(false);
+  const {mutate,isLoading }= createBookmarkMutation()
+  const {setIsOpen} = useAddBookmarkModal()
   const form = useForm<z.infer<typeof CreateBookmarkSchema>>({
     resolver: zodResolver(CreateBookmarkSchema),
     defaultValues: {
@@ -32,14 +35,12 @@ export const CreateBookmark = () => {
   });
   const onSubmit = async (data: z.infer<typeof CreateBookmarkSchema>) => {
     try {
-     setIsLoading(true);
-     const bookmark = await createBookmark(data);
-     console.log(bookmark);
+
+      mutate(data);
+      setIsOpen();
 
     }catch(error){
       console.log(error);
-    }finally{
-        setIsLoading(false);
     }
   };
   return (
@@ -98,9 +99,9 @@ export const CreateBookmark = () => {
               <Button
                 type="submit"
                 className="w-full rounded-none font-mono disabled:text-neutral-500"
-                disabled={isloading}
+                disabled={isLoading}
               >
-                {isloading ? (
+                {isLoading ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
                   "Create"
@@ -109,7 +110,7 @@ export const CreateBookmark = () => {
               <Button
                 type="button"
                 className="w-full rounded-none font-mono text-neutral-100 disabled:text-neutral-500 bg-neutral-900/60 hover:bg-neutral-900/50 hover:text-neutral-300"
-                disabled={isloading}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
