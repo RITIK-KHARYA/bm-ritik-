@@ -1,43 +1,65 @@
-import { Bookmark } from "lucide-react";
+import { Ellipsis, Link2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
-interface bookmarkCard {
+interface BookmarkCardProps {
   title: string | null;
-  description: string |null;
-  url: string 
+  description: string | null;
+  url: string;
   thumbnail: string | null;
   tags: string[];
 }
-export const BookmarkCard = ({title, description, url, thumbnail, tags}: bookmarkCard) => {
+
+export const BookmarkCard = ({
+  title,
+  url,
+  thumbnail,
+  tags,
+}: BookmarkCardProps) => {
   return (
-    <div className="flex flex-col gap-2 rounded-none border border-neutral-700/[0.2] bg-neutral-900 p-4 ">
-      <div className="flex flex-row gap-2 items-center">
-        <div className="flex gap-2 items-center">
-          <Image
-          src={thumbnail ?? "/globe.svg"}
+    <div className="flex flex-col rounded-none border border-neutral-700/[0.2] bg-neutral-900 gap-1 group cursor-pointer h-64">
+      {/* Image section */}
+      <div className="relative w-full h-[60%]">
+        <div className="absolute top-0 right-2 group-hover:opacity-100 opacity-0 transition-opacity">
+          <Ellipsis className="text-neutral-900" />
+        </div>
+        <Image
+          src={thumbnail ?? "/vercel.svg"}
           alt="thumbnail"
-          width={40}
-          height={40}
+          layout="fill"
+          objectFit="cover"
           className="rounded-none"
-          />
+        />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#0d0d0d] to-transparent opacity-70"></div>
+      </div>
+      <div className="p-1 flex flex-col  h-[40%] justify-between">
+        <div className="flex-grow">
+          <p className="text-sm line-clamp-3  font-mono text-neutral-300">
+            {title ?? "Untitled"}
+          </p>
         </div>
-        <div className="flex items-center gap-2 ">
-          <Bookmark className="text-neutral-500  " />
-          <span className="text-sm font-mono text-neutral-500">{title}</span>
-        </div>
-        <div className="flex gap-2 items-center">
-          <span className="text-xs font-mono text-neutral-500">
-            {description}
-          </span>
-          <span className="text-xs font-mono text-neutral-500">{url}</span>
+
+        <div className="flex flex-row gap-2 justify-between items-center">
+          <div className="flex flex-row gap-2 items-center flex-wrap">
+            {tags.map((tag) => (
+              <div
+                key={tag}
+                className="bg-neutral-200 border border-neutral-700/[0.4] px-2 py-1 text-xs font-mono hover:bg-neutral-300"
+              >
+                <span className="text-xs font-mono text-neutral-800">
+                  {tag}
+                </span>
+              </div>
+            ))}
+          </div>
+          <Link href={url} target="_blank">
+            <Link2
+              className="text-xs font-mono text-neutral-500 hover:text-neutral-300 transition-opacity"
+              size={24}
+            />
+          </Link>
         </div>
       </div>
-
-      {tags.map((tag) => (
-        <div key={tag} className="flex gap-2 items-center">
-          <span className="text-xs font-mono text-neutral-500">{tag}</span>
-        </div>
-      ))}
     </div>
   );
 };

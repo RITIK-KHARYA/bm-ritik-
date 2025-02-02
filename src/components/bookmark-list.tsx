@@ -30,7 +30,7 @@ export default async function BookmarkList() {
   }
   return (
     <div className="w-full h-full">
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 gap-2">
         {bookmarks.data?.map((bookmark) => (
           <BookmarkCard
             key={bookmark.id}

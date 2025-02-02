@@ -22,13 +22,13 @@ export default function BookmarkDialog() {
       </DialogTrigger>
       <DialogContent className="flex flex-col rounded-none gap-0 p-0 sm:max-h-[min(640px,80vh)] sm:max-w-lg [&>button:last-child]:top-3.5">
         <DialogHeader className="contents space-y-0 text-left rounded-none">
-          <DialogTitle className="border-b border-border p-2 text-base flex flex-row gap-x-2 text-neutral-400 font-mono">
-            <Bookmark className="text-neutral-400 border border-neutral-700/[0.4] p-1 bg-neutral-900/80 " />
+          <DialogTitle className="border-b border-border p-2 text-base flex flex-row gap-x-2 text-neutral-400 font-mono bg-neutral-900/70">
+            <Bookmark className="text-neutral-400 border border-neutral-700/[0.4] p-1 bg-neutral-900 " />
             Add a new bookmark
           </DialogTitle>
         </DialogHeader>
         <div className="overflow-y-auto p-3">
-          <CreateBookmark />
+          <CreateBookmark/>
         </div>
       </DialogContent>
     </Dialog>

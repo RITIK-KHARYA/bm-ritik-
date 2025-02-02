@@ -5,11 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.launchuicomponents.com",
-      },
-      {
-        protocol: "https",
-        hostname: "assets.vercel.com",
+        hostname: "*",
       },
     ],
   },
