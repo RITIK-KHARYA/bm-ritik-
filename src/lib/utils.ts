@@ -10,20 +10,16 @@ export function isValidUrl(url: string) {
   return urlRegex.test(url);
 }
 
-export const getWebsiteName = (url: string): string => {
-  try {
+export const getWebsiteName = (url:string):string => {
+  const hostname = new URL(url).hostname;
+  console.log(hostname);
+  const parts = hostname.split(".").filter((part) => part !== "www");
+  console.log(parts);
+  console.log(parts.length);
 
-    const hostname = new URL(url).hostname;
-
-
-
-    let domain = hostname.replace(/^www\./, "");
-
-    domain = domain.split(".")[0];
-
-    return domain;
-  } catch (error) {
-    console.error("Invalid URL:", url);
-    return url; 
+  if (parts.length > 2) {
+    return parts[parts.length - 2];
   }
+
+  return parts[0];
 };

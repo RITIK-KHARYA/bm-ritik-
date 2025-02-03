@@ -3,7 +3,7 @@ import { getSession } from "./session";
 import { prisma } from "@/lib/prisma";
 import { getMetadata } from "@/lib/extracter";
 import { CreateBookmark } from "@/lib/types";
-import { isValidUrl } from "@/lib/utils";
+import { getWebsiteName, isValidUrl } from "@/lib/utils";
 
 export const createBookmark = async (data: CreateBookmark) => {
   const user = await getSession();
@@ -19,6 +19,7 @@ export const createBookmark = async (data: CreateBookmark) => {
 
     const metadata = await getMetadata(data.url);
     console.log(metadata?.icon);
+    const platform = getWebsiteName(data.url)
 
     const result = await prisma.$transaction(async (prisma) => {
       const bookmark = await prisma.bookmark.create({
@@ -30,6 +31,7 @@ export const createBookmark = async (data: CreateBookmark) => {
           description: metadata?.description,
           icon: metadata?.icon,
           spaceId: data.spaceId || null,
+          platform
         },
       });
 

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface BookmarkCardProps {
+  id: string;
   title: string | null;
   description: string | null;
   url: string;
@@ -13,6 +14,7 @@ interface BookmarkCardProps {
 }
 
 export const BookmarkCard = ({
+  id,
   title,
   url,
   thumbnail,
@@ -20,7 +22,7 @@ export const BookmarkCard = ({
   icon
 }: BookmarkCardProps) => {
   return (
-    <div className="flex flex-col rounded-none border border-neutral-700/[0.2] bg-neutral-900 gap-1 group cursor-pointer h-64">
+    <div className="flex flex-col rounded-none border border-neutral-700/[0.2] bg-neutral-900 gap-1 group cursor-pointer h-64" key={id}>
       {/* Image section */}
       <div className="relative w-full h-[60%]">
         <div className="absolute top-0 right-2 group-hover:opacity-100 opacity-0 transition-opacity">

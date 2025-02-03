@@ -83,6 +83,7 @@ model bookmark {
   description   String?
   url           String
   icon String?
+  platform   String?
   thumbnail     String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt

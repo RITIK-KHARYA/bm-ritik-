@@ -11,6 +11,7 @@ export const getMetadata = async (url: string) => {
         document.querySelector('meta[property="og:title"]') ||
         document.querySelector("title") ||
         "";
+      
       const description =
         document.querySelector('meta[property="og:description"]') ||
         document.querySelector("meta[name='description']") ||
@@ -24,7 +25,7 @@ export const getMetadata = async (url: string) => {
           .querySelector('meta[property="twitter:image"]')
           ?.getAttribute("content") ||
         document
-          .querySelector('meta[name:"thumbnail"]')
+          .querySelector('meta[name="thumbnail"]')
           ?.getAttribute("content") ||
         document.querySelector('link[rel="image_src"]')?.getAttribute("href") ||
         "";
@@ -50,3 +51,4 @@ export const getMetadata = async (url: string) => {
     console.error("Error fetching metadata:", error);
   }
 };
+
