@@ -10,7 +10,7 @@ import { toast } from "sonner";
 export const useBookmarks = () => {
   const { data } = useQuery({
     queryKey: ["bookmarks"],
-    queryFn: getBookmarks,
+    queryFn: ()=> getBookmarks(),
   });
   return {
     data: data?.data,
@@ -38,7 +38,7 @@ export const createBookmarkMutation = () => {
       };
       query.setQueryData(["bookmarks"], (old: any) => ({
         ...old,
-        data: [...(old?.data || []), bookmark],
+        data: [bookmark, ...(old?.data || [])],
       }));
      toast.loading("Creating bookmark..." ,{
         id: "create-bookmark",

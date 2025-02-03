@@ -1,3 +1,4 @@
+"use server"
 import { getSession } from "@/actions/session";
 import { prisma } from "@/lib/prisma";
 
@@ -22,6 +23,9 @@ export const getBookmarks = async () => {
           },
         },
        },
+      },
+      orderBy:{
+        createdAt:"desc"
       }
     })
     const data = bookmarks.map((bookmark) => ({
