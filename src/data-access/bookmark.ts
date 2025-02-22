@@ -1,6 +1,8 @@
 "use server"
 import { getSession } from "@/actions/session";
 import { prisma } from "@/lib/prisma";
+import { redis } from "@/lib/redis";
+import { metadata } from "@/lib/types";
 
 export const getBookmarks = async () => {
   const user = await getSession();
@@ -42,3 +44,12 @@ export const getBookmarks = async () => {
 
 export const getBookmarkById = async (id: string) => {};
 export const getBookmarkBySpace = async (id: string) => {};
+
+
+export const getBookmarkMetadata = async (url:string) => {
+  const cachedMetadata: metadata | null = await redis.get(
+    `${url}-metadata`
+  );
+
+  return cachedMetadata;
+};

@@ -15,31 +15,30 @@ import {
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { CheckIcon, Loader2, X, } from "lucide-react";
+import { CheckIcon, Loader2, X } from "lucide-react";
 import MultipleTags from "../multiple-tags";
 import { isValidUrl } from "@/lib/utils";
 
-import { createBookmarkMutation} from "@/hooks/use-bookmarks";
+import { createBookmarkMutation } from "@/hooks/use-bookmarks";
 import { useAddBookmarkModal } from "@/hooks/use-strore";
+import { getMetadata } from "@/lib/extracter";
 
 export const CreateBookmark = () => {
-  const {mutate,isLoading }= createBookmarkMutation()
-  const {setIsOpen} = useAddBookmarkModal()
+  const { mutate, isLoading } = createBookmarkMutation();
+  const { setIsOpen } = useAddBookmarkModal();
   const form = useForm<z.infer<typeof CreateBookmarkSchema>>({
     resolver: zodResolver(CreateBookmarkSchema),
     defaultValues: {
       url: "",
-      tags: []
+      tags: [],
     },
     mode: "onSubmit",
   });
   const onSubmit = async (data: z.infer<typeof CreateBookmarkSchema>) => {
     try {
-
       mutate(data);
       setIsOpen();
-
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   };
@@ -62,7 +61,15 @@ export const CreateBookmark = () => {
                           className="rounded-none bg-neutral-900/60"
                           placeholder="https://example.com"
                           required
-                          {...field}
+                          onChange={(e) => {
+                            const isValid = isValidUrl(e.target.value);
+                            if (isValid) {
+                              getMetadata(e.target.value);
+                            }
+
+                            field.onChange(e.target.value);
+                          }}
+                          value={field.value}
                         />
 
                         <div className="flex flex-row w-fit border border-neutral-700/[0.4] bg-neutral-900/80 rounded-none p-1 text-xs">

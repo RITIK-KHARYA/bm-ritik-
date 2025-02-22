@@ -1,8 +1,18 @@
+"use server"
 import axios from "axios";
 import * as cheerio from "cheerio";
+import { redis } from "./redis";
+import { metadata } from "./types";
+import { isValidUrl } from "./utils";
 
-export const getMetadata = async (url:string) => {
+export const getMetadata = async (url: string) => {
   try {
+    const metadataKey = `${url}-metadata`;
+    const cachedMetadata: metadata | null = await redis.get(metadataKey);
+    if (cachedMetadata) {
+      console.log("Cache hit", cachedMetadata);
+      return cachedMetadata;
+    }
     const startTime = Date.now();
     const { data } = await axios.get(url, {
       headers: { "User-Agent": "Mozilla/5.0" },
@@ -36,10 +46,10 @@ export const getMetadata = async (url:string) => {
       image: image ? new URL(image, url).href : "",
       icon: favicon ? new URL(favicon, url).href : "",
     };
+    await redis.set(metadataKey, JSON.stringify(metadata), { ex: 60 * 5 });
 
     const endTime = Date.now();
     console.log(`Metadata fetched in ${(endTime - startTime) / 1000} seconds`);
-    console.log(metadata);
     return metadata;
   } catch (error) {
     console.error("Error fetching metadata:", error);
@@ -47,6 +57,3 @@ export const getMetadata = async (url:string) => {
   }
 };
 
-getMetadata(
-  "https://stackoverflow.com/questions/62852481/how-to-speed-up-puppeteer"
-);

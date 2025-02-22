@@ -32,3 +32,10 @@ export interface ExtendedBookmark extends bookmark {
 export interface BookmarkType {
   initialData: ExtendedBookmark[];
 }
+
+export interface metadata {
+  title: string |null
+  description: string |null
+  image: string|null
+  icon: string|null
+}

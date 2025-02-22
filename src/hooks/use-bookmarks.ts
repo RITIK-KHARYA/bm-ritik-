@@ -1,11 +1,13 @@
 "use client";
 import { createBookmark } from "@/actions/bookmark";
-import { getBookmarks } from "@/data-access/bookmark";
-import { CreateBookmarkSchema } from "@/lib/types";
+import { getBookmarkMetadata, getBookmarks } from "@/data-access/bookmark";
+import { CreateBookmarkSchema, metadata } from "@/lib/types";
 import { getWebsiteName } from "@/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { toast } from "sonner";
+import { redis } from "@/lib/redis";
+import { url } from "inspector";
 
 export const useBookmarks = () => {
   const { data } = useQuery({
@@ -31,11 +33,14 @@ export const createBookmarkMutation = () => {
       await query.cancelQueries({ queryKey: ["bookmarks"] });
 
       const previousBookmarks = query.getQueryData(["bookmarks"]);
+      const cachedMetadata:metadata | null = await getBookmarkMetadata(newBookmark.url);
       const bookmark = {
-        url: newBookmark.url,
-        title: getWebsiteName(newBookmark.url),
+        url:newBookmark.url,
+        title: cachedMetadata?.title || getWebsiteName(newBookmark.url),
+        thumbnail : cachedMetadata?.image || "",
         tags: newBookmark.tags,
       };
+      console.log(bookmark);
       query.setQueryData(["bookmarks"], (old: any) => ({
         ...old,
         data: [bookmark, ...(old?.data || [])],
