@@ -82,8 +82,8 @@ model bookmark {
   title         String?
   description   String?
   url           String
-  icon          String?
-  platform      String?
+  icon String?
+  platform   String?
   thumbnail     String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -135,6 +135,5 @@ model BookmarkTag {
   bookmark   bookmark @relation(fields: [bookmarkId], references: [id], onDelete: Cascade)
   tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
-
   @@id([bookmarkId, tagId])
 }
