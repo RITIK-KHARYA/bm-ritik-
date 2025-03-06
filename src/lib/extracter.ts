@@ -50,6 +50,7 @@ export const getMetadata = async (url: string) => {
 
     const endTime = Date.now();
     console.log(`Metadata fetched in ${(endTime - startTime) / 1000} seconds`);
+    console.log(metadata);
     return metadata;
   } catch (error) {
     console.error("Error fetching metadata:", error);

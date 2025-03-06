@@ -29,7 +29,7 @@ export const BookmarkCard = ({
           <Ellipsis className="text-neutral-900" />
         </div>
         <Image
-          src={thumbnail ?? "/vercel.svg"}
+          src={thumbnail && thumbnail != "" ? thumbnail :"/vercel.svg"}
           alt="thumbnail"
           layout="fill"
           objectFit="cover"
@@ -66,7 +66,7 @@ export const BookmarkCard = ({
             </Link>
             <div className="border border-neutral-700/[0.4] bg-neutral-900 rounded-none p-1 flex flex-row gap-2 items-center">
               <Image
-                src={icon ?? "/vercel.svg"}
+                src={icon && icon != "" ? icon :"/vercel.svg"}
                 alt="icon"
                 height={20}
                 width={20}
