@@ -88,11 +88,12 @@ model bookmark {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   reminder      DateTime?
-  userId        String
+  userId        String      
   user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   spaceId       String?
   SpaceBookmark SpaceBookmark[]
   BookmarkTag   BookmarkTag[]
+  @@index([userId])
 }
 
 model space {

@@ -1,3 +1,4 @@
+import bookmarkApp from "@/data-access/bookmarks";
 import { auth } from "@/lib/auth";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
@@ -12,10 +13,10 @@ app.get("/hello", (c) => {
   });
 });
 
-app.on(["POST", "GET"], "/api/auth/*", (c) => {
+app.on(["POST", "GET"], "/auth/*", (c) => {
   return auth.handler(c.req.raw);
 });
-
+app.route("/bookmarks",bookmarkApp)
 export const GET = handle(app);
 export const POST = handle(app);
 export const PUT = handle(app);

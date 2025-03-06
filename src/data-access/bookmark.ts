@@ -1,4 +1,3 @@
-"use server"
 import { getSession } from "@/actions/session";
 import { prisma } from "@/lib/prisma";
 import { redis } from "@/lib/redis";

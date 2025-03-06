@@ -6,13 +6,15 @@ import { getWebsiteName } from "@/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
 import { toast } from "sonner";
-import { redis } from "@/lib/redis";
-import { url } from "inspector";
+import axios from "axios";
 
 export const useBookmarks = () => {
   const { data } = useQuery({
     queryKey: ["bookmarks"],
-    queryFn: ()=> getBookmarks(),
+    queryFn: async()=>{
+      const res = await axios.get("/api/bookmarks");
+      return res.data
+    }
   });
   return {
     data: data?.data,
