@@ -1,6 +1,6 @@
 "use client";
 import { createBookmark } from "@/actions/bookmark";
-import { getBookmarkMetadata, getBookmarks } from "@/data-access/bookmark";
+import { getBookmarkMetadata } from "@/data-access/bookmark";
 import { CreateBookmarkSchema, metadata } from "@/lib/types";
 import { getWebsiteName } from "@/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -13,11 +13,13 @@ export const useBookmarks = () => {
     queryKey: ["bookmarks"],
     queryFn: async()=>{
       const res = await axios.get("/api/bookmarks");
+
       return res.data
     }
   });
+
   return {
-    data: data?.data,
+    data: data?.bookmarks,
     error: data?.error,
   };
 };

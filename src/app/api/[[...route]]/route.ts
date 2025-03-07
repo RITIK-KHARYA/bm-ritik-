@@ -1,7 +1,8 @@
-import bookmarkApp from "@/data-access/bookmarks";
+import bookmarkApp from "./bookmarks";
 import { auth } from "@/lib/auth";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
+import authApp from "./auth";
 
 export const runtime = "edge";
 
@@ -13,10 +14,9 @@ app.get("/hello", (c) => {
   });
 });
 
-app.on(["POST", "GET"], "/auth/*", (c) => {
-  return auth.handler(c.req.raw);
-});
+
 app.route("/bookmarks",bookmarkApp)
+app.route("/",authApp)
 export const GET = handle(app);
 export const POST = handle(app);
 export const PUT = handle(app);

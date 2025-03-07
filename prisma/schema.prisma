@@ -6,7 +6,6 @@
 
 generator client {
   provider   = "prisma-client-js"
-  engineType = "library"
 }
 
 datasource db {
@@ -123,7 +122,7 @@ model Tag {
   id          String        @id @default(cuid())
   name        String
   userId      String
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade) // Relationship with User
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade) 
   createdAt   DateTime      @default(now())
   BookmarkTag BookmarkTag[]
 

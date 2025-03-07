@@ -22,21 +22,11 @@ export default function BookmarkList() {
       </div>
     );
   }
-  if (error) {
-    return (
-      <div className="w-full h-full items-center justify-center">
-        <div className="flex flex-col items-center bg-nuetral-900 rounded-none p-4 gap-2 ">
-          <Bookmark className="text-neutral-500  " />
-        </div>
-        <span>Something went wrong!</span>
-        <span>Please try again later!</span>
-      </div>
-    );
-  }
+
   return (
     <div className="w-full h-full">
       <div className="grid grid-cols-4 gap-2">
-        {bookmarks?.map((bookmark) => (
+        {bookmarks?.map((bookmark:any) => (
           <BookmarkCard
             key={bookmark.id}
             id={bookmark.id}

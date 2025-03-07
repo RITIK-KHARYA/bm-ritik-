@@ -1,8 +1,7 @@
 import { Hono } from "hono";
-import { getBookmarks } from "./bookmark";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/actions/session";
-
+export const runtime = "edge"
 const bookmarkApp = new Hono().get("/", async (c) => {
   const user = await getSession();
   if (!user) {
@@ -27,7 +26,6 @@ const bookmarkApp = new Hono().get("/", async (c) => {
     orderBy: {
       createdAt: "desc",
     },
-    take:5
   });
   const data = bookmarks.map((bookmark) => ({
     ...bookmark,
